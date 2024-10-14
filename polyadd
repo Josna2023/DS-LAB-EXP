@@ -1,0 +1,178 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct poly
+{
+  int coeff;
+  int expo;
+  struct poly*link;
+};
+struct poly *head1=NULL,*head2=NULL,*current1=NULL,*current2=NULL,*newnode,*ptr,*temp1,*temp2;
+void createpoly()
+{
+   int n1,n2,i;
+   printf("enter the number of terms of polynomial1\n");
+   scanf("%d",&n1);
+   printf("enter the number of terms of polynomial2\n");
+   scanf("%d",&n2);
+   for(i=0;i<n1;i++)
+   {
+      newnode=(struct poly*)malloc(sizeof(struct poly));
+      printf("enter coefficient for term %d of polynomial1:\n",i+1);
+      scanf("%d",&newnode->coeff);
+      printf("enter exponent for term %d of polynomial1:\n",i+1);
+      scanf("%d",&newnode->expo);
+      newnode->link=NULL;
+      if(head1==NULL)
+      {
+         head1=newnode;
+         current1=newnode;
+      }
+      else
+      {
+         current1->link=newnode;
+         current1=newnode;
+      }
+    }
+      ptr=head1;
+      while(ptr!=NULL)
+      {
+      printf("(%dx^%d)",ptr->coeff,ptr->expo);
+      ptr=ptr->link;
+      if(ptr!=NULL)
+      {
+       
+        printf("+");
+      }
+      else
+      {
+       printf("\n");
+      }
+    }
+   
+   printf("\n");
+   
+   for(i=0;i<n2;i++)
+    {
+    newnode=(struct poly*)malloc(sizeof(struct poly));
+      printf("enter coefficient for term %d of polynomial2:\n",i+1);
+      scanf("%d",&newnode->coeff);
+      printf("enter exponent for term %d of polynomial1:\n",i+1);
+      scanf("%d",&newnode->expo);
+      newnode->link=NULL;
+      if(head2==NULL)
+      {
+         head2=newnode;
+         struct poly* temp2=head2;
+         current2=newnode;
+      }
+      else
+      {
+         current2->link=newnode;
+         current2=newnode;
+      }
+      }
+      ptr=head2;
+      while(ptr!=NULL)
+      {
+      printf("(%dx^%d)",ptr->coeff,ptr->expo);
+      ptr=ptr->link;
+      if(ptr!=NULL)
+      {
+       
+        printf("+");
+      }
+      else
+      {
+       printf("\n");
+      }
+    }
+    printf("\n");
+    struct poly *temp1=head1;
+    struct poly *temp2=head2;
+    struct poly* result=NULL;
+    struct poly* currentresult=NULL;
+    while(temp1!=NULL && temp2!=NULL)
+    {
+       struct poly*newnode=(struct poly*)malloc(sizeof(struct poly));
+       if(temp1->expo==temp2->expo)
+       {
+          newnode->coeff=temp1->coeff+temp2->coeff;
+          newnode->expo=temp1->expo;
+          temp1=temp1->link;
+          temp2=temp2->link;
+       }
+       else if(temp1->expo>temp2->expo)
+       {
+          newnode->coeff=temp1->coeff;
+          newnode->expo=temp1->expo;
+          temp1=temp1->link;
+       }
+       else if(temp1->expo<temp2->expo)
+       {
+          newnode->coeff=temp2->coeff;
+          newnode->expo=temp2->expo;
+          temp2=temp2->link;
+       }
+       newnode->link=NULL;
+       if(result==NULL)
+       {
+          result=newnode;
+          currentresult=newnode;
+       }
+       else
+       {
+          currentresult->link=newnode;
+          currentresult=newnode;
+       }
+    }
+    while(temp1!=NULL)
+    {
+      struct poly*newnode=(struct poly*)malloc(sizeof(struct poly));
+      newnode->coeff=temp1->coeff;
+      newnode->expo=temp1->expo;
+      newnode->link=NULL;
+      temp1=temp1->link;
+      currentresult->link=newnode;
+      currentresult=newnode;
+    }
+    while(temp2!=NULL)
+    {
+      struct poly*newnode=(struct poly*)malloc(sizeof(struct poly));
+      newnode->coeff=temp2->coeff;
+      newnode->expo=temp2->expo;
+      newnode->link=NULL;
+      temp2=temp2->link;
+      currentresult->link=newnode;
+      currentresult=newnode;
+    }
+    printf("resultant polynomial\n");
+    struct poly *temp=result;
+    while(temp!=NULL)
+    {
+        printf("%dx^%d",temp->coeff,temp->expo);
+        temp=temp->link;
+        if(temp!=NULL)
+        {
+          printf("+");
+        }
+         else
+         {
+        printf("\n");
+        }
+ }
+ }
+ int main()
+ {
+   createpoly();
+ 
+}
+
+     
+         
+       
+       
+       
+       
+      
+      
+	
